@@ -9,6 +9,76 @@
 
 <body>
   <h1>Documentation</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request body data format</th>
+        <th>Response body data format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Get a list of movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A JSON object holding data about all the movies</td>
+      </tr>
+      <tr>
+        <td>Get data about a single movie by name</td>
+        <td>/movies/[Name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          A JSON object holding data about a single movie,<br>
+          Example:<br>
+          {<br>
+            id: 1,<br>
+            title: "Titanic",<br>
+            year: 1997<br>
+          }
+        </td>
+      </tr>
+      <tr>
+        <td>Add a movie</td>
+        <td>/movies</td>
+        <td>POST</td>
+        <td>
+          A JSON object holding data about the movie to add,<br>
+          Example:<br>
+          {<br>
+            title: "Downfall",<br>
+            year: 2004<br>
+          }
+        </td>
+        <td>
+          A JSON object holding data about the movie that was added, incuding an ID:<br>
+          {<br>
+            id: 5,<br>
+            title: "Downfall",<br>
+            year: 2004<br>
+          }
+        </td>
+      </tr>
+      <tr>
+        <td>Remove a movie by ID</td>
+        <td>/movies/[ID]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>A ext message indicating whether the movie was successfully removed</td>
+      </tr>
+      <tr>
+        <td>Update the year of a certain movie</td>
+        <td>/movies/[Title]/[year]</td>
+        <td>PUT</td>
+        <td>None</td>
+        <td>A text message indicating wheter the year of the certain movie was updated</td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 
 </html>
