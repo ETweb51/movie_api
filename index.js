@@ -15,52 +15,52 @@ app.use(bodyParser.json());
 // An array of objects with my top ten movies
 let topTenMovies = [
   {
-    id: 1,
+    id: '1',
     title: 'The Lord of the Rings: The Return of the King',
     year: '2003'
   },
   {
-    id: 2,
+    id: '2',
     title: 'Savin Private Ryan',
     year: '1998'
   },
   {
-    id: 3,
+    id: '3',
     title: 'Nocturnal Animals',
     year: '2016'
   },
   {
-    id: 4,
+    id: '4',
     title: 'The Hobbit: The Battle of the Five Armies',
     year: '2014'
   },
   {
-    id: 5,
+    id: '5',
     title: 'Shutter Island',
     year: '2010'
   },
   {
-    id: 6,
+    id: '6',
     title: 'Limitless',
     year: '2011'
   },
   {
-    id: 7,
+    id: '7',
     title: 'The Godfather',
     year: '1972'
   },
   {
-    id: 8,
+    id: '8',
     title: 'Blood In Blood Out',
     year: '1993'
   },
   {
-    id: 9,
+    id: '9',
     title: 'City of God',
     year: '2002'
   },
   {
-    id: 10,
+    id: '10',
     title: 'Inception',
     year: '2010'
   }
@@ -99,8 +99,16 @@ app.post('/movies', (req, res) => {
 
 // Delet a movie from the list by id
 app.delete('/movies/:id', (req, res) => {
-  topTenMovies = topTenMovies.filter((obj) => { return obj.id !== req.params.id });
-  res.status(201).send('Movie with the ID of ' + req.params.id + ' was deleted.');
+  let movie = topTenMovies.find((movie) => {
+    return movie.id === req.params.id
+  });
+
+  if (movie) {
+    topTenMovies = topTenMovies.filter((obj) => { return obj.id !== req.params.id });
+    res.status(201).send('Movie with the ID of ' + req.params.id + ' was deleted.');
+  } else {
+    res.status(404).send(`Movie with the id ${req.params.id} was not found.`);
+  }
 });
 
 // Update the year of a movie by title
