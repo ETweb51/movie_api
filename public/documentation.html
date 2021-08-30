@@ -28,8 +28,8 @@
         <td>A JSON object holding data about all the movies</td>
       </tr>
       <tr>
-        <td>Get data about a single movie by name</td>
-        <td>/movies/[Name]</td>
+        <td>Get data about a single movie by title</td>
+        <td>/movies/[Title]</td>
         <td>GET</td>
         <td>None</td>
         <td>
@@ -43,39 +43,79 @@
         </td>
       </tr>
       <tr>
-        <td>Add a movie</td>
-        <td>/movies</td>
-        <td>POST</td>
+        <td>Get a list of users</td>
+        <td>/users</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A JSON object holding data about all the users</td>
+      </tr>
+      <tr>
+        <td>Get data about a single user by name</td>
+        <td>/users/[Name]</td>
+        <td>GET</td>
+        <td>None</td>
         <td>
-          A JSON object holding data about the movie to add,<br>
+          A JSON object holding data about a single user,<br>
           Example:<br>
           {<br>
-            title: "Downfall",<br>
-            year: 2004<br>
+            Name: "testuser1",<br>
+            Password: "testuser123",<br>
+            Mail: "testuser1@gmail.com"<br>
+          }
+        </td>
+      </tr>
+      <tr>
+        <td>Add an user</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>
+          A JSON object holding data about the user to add,<br>
+          Example:<br>
+          {<br>
+            Name: "testuser1",<br>
+            Password: "testuser123",<br>
+            Mail: "testuser1@gmail.com"<br>
           }
         </td>
         <td>
-          A JSON object holding data about the movie that was added, incuding an ID:<br>
+          A JSON object holding data about the user to add,<br>
+          Example:<br>
           {<br>
-            id: 5,<br>
-            title: "Downfall",<br>
-            year: 2004<br>
+            Name: "testuser1",<br>
+            Password: "testuser123",<br>
+            Mail: "testuser1@gmail.com",<br>
+            FavoriteMovie: [],<br>
+            __v: 0<br>
           }
         </td>
       </tr>
       <tr>
-        <td>Remove a movie by ID</td>
-        <td>/movies/[ID]</td>
-        <td>DELETE</td>
+        <td>Add a movie by ID to the favorite list of an user</td>
+        <td>/users/[Name]/movies/[MovieID]</td>
+        <td>POST</td>
         <td>None</td>
-        <td>A ext message indicating whether the movie was successfully removed</td>
+        <td>A JSON file with MovieID as vlaue of FavoriteMovies key</td>
       </tr>
       <tr>
-        <td>Update the year of a certain movie</td>
-        <td>/movies/[Title]/[year]</td>
+        <td>Update a certain user</td>
+        <td>/users/[Name]</td>
         <td>PUT</td>
         <td>None</td>
-        <td>A text message indicating wheter the year of the certain movie was updated</td>
+        <td>A text message indicating wheter the user was updated</td>
+      </tr>
+      <tr>
+        <td>Delete an user</td>
+        <td>/movies/[Name]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>A text message indicating whether the user was successfully removed</td>
+      </tr>
+      <tr>
+        <td>Remove a movie by ID from the FavoriteMovies of an user</td>
+        <td>/users/[Name]/movies/[MovieID]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>A text message indicating whether the movie was successfully removed</td>
       </tr>
     </tbody>
   </table>
