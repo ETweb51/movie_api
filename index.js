@@ -21,6 +21,10 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Importing auth.js and passport
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 // Welcoming message
 app.get('/', (req, res) => {
@@ -28,7 +32,7 @@ app.get('/', (req, res) => {
 });
 
 // Get all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
@@ -40,7 +44,7 @@ app.get('/movies', (req, res) => {
 });
 
 // Get data about a certain movie
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({Title: req.params.Title})
   .then((movie) => {
     res.json(movie);
@@ -101,7 +105,7 @@ app.post('/users', (req, res) => {
 });
 
 // Add a movie to the favorite list of an user
-app.post('/users/:Name/movies/:MovieID', (req, res) => {
+app.post('/users/:Name/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndUpdate({Name: req.params.Name}, {
     $push: {FavoriteMovies: req.params.MovieID}
   },
@@ -117,7 +121,7 @@ app.post('/users/:Name/movies/:MovieID', (req, res) => {
 });
 
 // Update user info by username
-app.put('/users/:Name', (req, res) => {
+app.put('/users/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndUpdate({Name: req.params.Name}, {
     $set:
     {
@@ -139,7 +143,7 @@ app.put('/users/:Name', (req, res) => {
 });
 
 // Delete a user by username
-app.delete('/users/:Name', (req, res) => {
+app.delete('/users/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndRemove({Name: req.params.Name})
   .then((user) => {
     if(!user) {
