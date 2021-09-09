@@ -3,6 +3,8 @@ morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid');
 
+const {check, validationResult} = require('express-validator');
+
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
@@ -20,6 +22,22 @@ app.use(express.static('public'));
 // Using body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Cros Origin Resource Sharing
+const cors = require('cors');
+
+let allowedOrigins = ['http://localhost:8080', 'http://myMovie.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      let message = 'The CORS policy for this application does not allow acces from origin ' + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Importing auth.js and passport
 let auth = require('./auth')(app);
@@ -80,7 +98,19 @@ app.get('/users/:Name', (req, res) => {
 });
 
 // Add a new user
-app.post('/users', (req, res) => {
+app.post('/users', [
+  check('Name', 'Username is required').isLength({min: 5}),
+  check('Name', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Mail', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({errors: erros.array() });
+  }
+
+  let hashPassowrd = Users.hashPassword(req.body.Password);
   Users.findOne({ Name: req.body.Name})
   .then((user) => {
     if (user) {
@@ -180,6 +210,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something gone wrong mate!');
 });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
 });
