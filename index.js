@@ -25,21 +25,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Cros Origin Resource Sharing
 const cors = require('cors');
-
-// Here was a line of code which allowed CORS
-
-/*
-app.use(cors({
-  origin: (origin, callback) => {
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      let message = 'The CORS policy for this application does not allow acces from origin ' + origin;
-      return callback(new Error(message), false);
-    }
-    return callback(null, true);
-  }
-}));
-*/
+app.use(cors());
 
 // Importing auth.js and passport
 let auth = require('./auth')(app);
