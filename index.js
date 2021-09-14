@@ -11,7 +11,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myMovieDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('process.env.CONNECTION_URI', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const app = express();
 
@@ -26,8 +26,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Cros Origin Resource Sharing
 const cors = require('cors');
 
-let allowedOrigins = ['http://localhost:8080', 'http://myMovie.com'];
+// Here was a line of code which allowed CORS
 
+/*
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
@@ -38,6 +39,7 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+*/
 
 // Importing auth.js and passport
 let auth = require('./auth')(app);
