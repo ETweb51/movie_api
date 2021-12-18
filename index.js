@@ -150,11 +150,12 @@ app.post('/users/:Name/movies/:MovieID', passport.authenticate('jwt', {session: 
 
 // Update user info by username
 app.put('/users/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({Name: req.params.Name}, {
     $set:
     {
       Name: req.body.Name,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Mail: req.body.Mail,
       Birthday: req.body.Birthday
     }
