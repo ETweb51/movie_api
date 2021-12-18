@@ -34,7 +34,8 @@ app.use(cors({
       return callback(new Error(message), false);
     }
     return callback(null, true);
-  }
+  },
+  allowedHeaders: ['Authorization']
 }));
 
 // Importing auth.js and passport
