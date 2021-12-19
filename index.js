@@ -25,7 +25,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Cros Origin Resource Sharing
 const cors = require('cors');
-let allowedOrigins = ['https://mymoviecf.netlify.app/', 'http://localhost:1234', 'http://localhost:8080', 'http://localhost:4200', 'https://etweb51.github.io/myMovie-Angular-Client/']
+let allowedOrigins = ['https://mymoviecf.netlify.app/', 'http://localhost:1234', 'http://localhost:8080', 'http://localhost:4200', 
+'https://etweb51.github.io/myMovie-Angular-Client/',
+'https://etweb51.github.io/myMovie-Angular-Client',
+'https://etweb51.github.io',
+'https://etweb51.github.io/'
+]
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
